@@ -53,7 +53,14 @@ export default class Task extends React.Component {
         rightElement={
             <TouchableOpacity style={styles.button}
               onPress ={()=>{
-               
+                db.collection("Tasks")
+                  .where("Task", "==",item.Task)
+                  .get()
+                  .then((snapshot) => {
+                    snapshot.forEach((doc) => {
+                      db.collection('Tasks').doc(doc.id).delete()
+                    });
+                  });
               }}
               >
               <Text style={{color:'#ffff'}}>Done</Text>
